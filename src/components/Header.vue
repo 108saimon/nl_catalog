@@ -7,7 +7,9 @@ const modalVisible = ref(false);
 <template>
   <header class="header wrapper">
     <div class="container">
-      <div class="current-city" @click="modalVisible = true">Выбор города</div>
+      <div class="current-city" @click="modalVisible = true">
+        <span class="current-city__icon"></span>Выбор города
+      </div>
     </div>
     <div class="modal" v-show="modalVisible">
       <div class="modal-background" @click="modalVisible = false"></div>
@@ -27,11 +29,21 @@ const modalVisible = ref(false);
   height: 72px;
   margin-bottom: 35px;
 }
+
 .current-city {
   font-family: 'FuturaPTBold', sans-serif;
   font-weight: normal;
 	font-style: normal;
   cursor: pointer;
+}
+.current-city__icon {
+  width: 11px;
+  height: 16px;
+  display: inline-block;
+  background-image: url('geo-icon.svg');
+  position: relative;
+  top: 2px;
+  margin-right: 7px;
 }
 
 .modal {
