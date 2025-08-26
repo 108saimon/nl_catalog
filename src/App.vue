@@ -81,7 +81,11 @@ onMounted(() => {
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 22px;
+  margin-right: 22px;
   font-size: 24px;
+}
+.categoria:nth-child(4n) {
+  margin-right: 0;
 }
 .categoria:hover {
   cursor: pointer;

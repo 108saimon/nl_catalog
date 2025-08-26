@@ -2,13 +2,16 @@
 import { ref, computed, onMounted } from 'vue';
 
 const modalVisible = ref(false);
+
+const currentCity = ref('Новосибирск');
 </script>
 
 <template>
   <header class="header wrapper">
     <div class="container">
       <div class="current-city" @click="modalVisible = true">
-        <span class="current-city__icon"></span>Выбор города
+        <span class="current-city__icon"></span>
+        {{ currentCity }}
       </div>
     </div>
     <div class="modal" v-show="modalVisible">
