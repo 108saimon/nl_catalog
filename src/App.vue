@@ -22,15 +22,10 @@ function initCatalog() {
     .catch(error => {
       console.error('Ошибка при запросе:', error);
     });
-    // Ключевые поля для использования:
-    // name - название категории
-    // text_color - цвет текста названия категории
-    // image - изображение для плитки категории
-    // slug - уникальный тэг категории, для запроса данных категории и формирования адреса страниц
 }
 
 onMounted(() => {
-  initCatalog();
+  // initCatalog();
 });
 
 </script>
@@ -43,7 +38,7 @@ onMounted(() => {
     </div>
   </div>
   <div class="wrapper">
-    <div class="catalog-categories container">
+    <div class="catalog-categories container" v-if="categories.length > 0">
       <div v-for="(categoria, index) in categories"
         class="categoria"
         :style="{

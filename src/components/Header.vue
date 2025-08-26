@@ -7,14 +7,34 @@ const currentCity = ref('Новосибирск');
 
 const tempCurrentCity = ref('Новосибирск');
 
+const cityIsSelect = ref(false);
+
+let inputTimeout = null;
+
 function changeCityInput(event) {
-  if (event?.target?.value && event.target.value.length > 2) {
-    console.log(event.target.value);
-  }
+  clearTimeout(inputTimeout);
+  inputTimeout = setTimeout(() => {
+    if (event?.target?.value && event.target.value.length > 2) {
+      console.log(event.target.value);
+      console.log(currentCity.value);
+    }
+  }, 300);
 }
 
 function clearInput() {
   tempCurrentCity.value = ('');
+}
+
+function debounce(func, wait) {
+  let timeout;
+  return function() {
+    const context = this;
+    const args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func.apply(context, args);
+    }, wait);
+  };
 }
 </script>
 
@@ -49,7 +69,12 @@ function clearInput() {
               </div>
             </div>
           </div>
-          <button class="city-select__submit-button">
+          <button 
+            class="city-select__submit-button"
+            :class="{
+              'city-select__submit-button-active': cityIsSelect
+            }"
+            >
             ПОДТВЕРДИТЬ
           </button>
         </div>
@@ -187,25 +212,22 @@ div {
   top: 32px;
   z-index: 130;
 }
-.city-select__submit-button:hover {
+.city-select__submit-button-active {
   background: linear-gradient(270deg, #FFA800 0%, #FF6F00 60.2%);
   color: #fff;
   cursor: pointer;
   border: none;
   background: linear-gradient(270deg, rgba(255, 168, 0, 0.6) 0%, rgba(255, 111, 0, 0.6) 100%);
 }
-/* .city-select__submit-button:hover::before {
-  content: '';
+.city-select__submit-button-active::before {
+  content: "";
   position: absolute;
-  top: 22px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: linear-gradient(270deg, rgba(255, 168, 0, 0.6) 0%, rgba(255, 111, 0, 0.6) 100%);
-  filter: blur(15px);
-  z-index: 125;
-  border-radius: 10px;
-} */
+  inset: 0px;
+  transform: translate(2px, 6px);
+  z-index: -1;
+  background: linear-gradient(270deg, rgba(255, 168, 0, 0.6) 0%, rgba(255, 111, 0, 0.6) 100%);
+  filter: blur(10px);
+}
 
 
 /* 
