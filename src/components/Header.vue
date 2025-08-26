@@ -50,7 +50,7 @@ function clearInput() {
             </div>
           </div>
           <button class="city-select__submit-button">
-            Подтвердить
+            ПОДТВЕРДИТЬ
           </button>
         </div>
       </div>
@@ -172,6 +172,23 @@ div {
   cursor: pointer;
   background-position: 50% 50%;
 }
+
+.city-select__submit-button {
+  box-sizing: border-box;
+  width: 174px;
+  height: 48px;
+  border-radius: 24px;
+  border: 2px solid rgba(151, 151, 151, 0.3);
+  color: rgba(172, 172, 172, 1);
+  font-size: 16px;
+  font-family: 'FuturaPTBold', sans-serif;
+  background: #fff;
+  position: relative;
+  top: 32px;
+}
+
+background: linear-gradient(270deg, #FFA800 0%, #FF6F00 60.2%);
+
 
 /* 
 <div class="city-select__wrapper">
