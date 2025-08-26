@@ -4,6 +4,8 @@ import { ref, computed, onMounted } from 'vue';
 const modalVisible = ref(false);
 
 const currentCity = ref('Новосибирск');
+
+const tempCurrentCity = ref('Новосибирск');
 </script>
 
 <template>
@@ -18,6 +20,23 @@ const currentCity = ref('Новосибирск');
       <div class="modal-background" @click="modalVisible = false"></div>
       <div class="modal-window">
         <div class="close-icon" @click="modalVisible = false"></div>
+        <div class="city-select__wrapper">
+          <div class="city-select">
+            <div class="city-select__header">
+              Выбор населённого пункта:
+            </div>
+            <div class="city-select__input-wrapper">
+              <input type="text" name="city-input" v-model="tempCurrentCity" class="city-select__input" placeholder="Например, Санкт-петербург" />
+              <div class="city-select-clear__icon"></div>
+              <div class="city-select__list-wrapper">
+                <div class="city-select__list"></div>
+              </div>
+            </div>
+          </div>
+          <button class="city-select__submit-button">
+            Подтвердить
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -25,6 +44,10 @@ const currentCity = ref('Новосибирск');
 </template>
 
 <style scoped>
+div {
+  box-sizing: border-box;
+}
+
 .header {
   width: 100%;
   background-color: #FFFFFF;
@@ -88,4 +111,65 @@ const currentCity = ref('Новосибирск');
   background-repeat: no-repeat;
   cursor: pointer;
 }
+
+.city-select__wrapper {
+  padding: 28px 18px 32px 18px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.city-select__header {
+  font-family: 'FuturaPTBold', sans-serif;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.city-select {
+  width: calc(100% - 192px);
+}
+
+.city-select__input-wrapper {
+  position: relative;
+}
+.city-select__input {
+  width: 100%;
+  box-sizing: border-box;
+  outline: 0;
+  font-size: 18px;
+  height: 48px;
+  padding: 12px 48px 13px 16px;
+  border: 1px solid rgba(151, 151, 151, 0.5);
+  border-radius: 5px;
+}
+
+.city-select-clear__icon {
+  margin: 0;
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  top: 0;
+  left: auto;
+  right: 0;
+  background-image: url('small-cross.svg');
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-position: 50% 50%;
+}
+
+/* 
+<div class="city-select__wrapper">
+  <div class="city-select">
+    <div class="city-select__header"></div>
+    <div class="city-select__input-wrapper">
+      <div class="city-select__input"></div>
+      <div class="city-select__list-wrapper">
+        <div class="city-select__list"></div>
+      </div>
+    </div>
+  </div>
+  <div class="city-select__submit-button">
+    Подтвердить
+  </div>
+</div> */
 </style>
