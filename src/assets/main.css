@@ -1,0 +1,46 @@
+@font-face {
+	font-family: 'FuturaPTBold';
+	src: 
+		url('FuturaPTBold.otf') format('otf');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'FuturaPTMedium';
+	src: 
+		url('FuturaPTMedium.otf') format('otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body, html {
+  min-height: 100vh;
+  font-family: 'FuturaPTMedium', sans-serif;
+	color: #272727;
+	background-color: #F7F7F7;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 1190px;
+  padding: 0 20px;
+  display: flex;
+}
+
+/* @media (max-width: 1339px) {
+  .container {
+    min-width: 960px;
+    width: 100%;
+    background-color: #fff;
+    padding: 48px 52px 48px 52px;
+  }
+} */
