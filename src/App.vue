@@ -2,15 +2,12 @@
 import axios from 'axios';
 import { ref, computed, onMounted } from 'vue';
 
-
 onMounted(() => {
-  axios.get('https://nlstar.com/ru/api/catalog3/v1/menutags/', {
+  axios.get('/api/ru/api/catalog3/v1/menutags/', {
       params: {
         'city_id': 1
       }, 
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      // Не задаём User-Agent/Content-Type вручную — браузер их установит сам
     })
     .then(response => {
       console.log(response.data);
