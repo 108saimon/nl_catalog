@@ -17,7 +17,7 @@ const currentCity = ref('Новосибирск');
     <div class="modal" v-show="modalVisible">
       <div class="modal-background" @click="modalVisible = false"></div>
       <div class="modal-window">
-        
+        <div class="close-icon" @click="modalVisible = false"></div>
       </div>
     </div>
   </header>
@@ -71,7 +71,21 @@ const currentCity = ref('Новосибирск');
   width: 769px;
   height: 144px;
   background: #fff;
+  position: relative;
   border-radius: 5px;
   z-index: 120;
+}
+
+.close-icon {
+  margin: 16px;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 0;
+  left: auto;
+  right: 0;
+  background-image: url('cross.svg');
+  background-repeat: no-repeat;
+  cursor: pointer;
 }
 </style>
