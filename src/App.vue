@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios';
 import { ref, computed, onMounted } from 'vue';
+import Header from './components/Header.vue';
 
 const cityId = ref(1);
 
@@ -35,11 +36,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="header wrapper">
-    <div class="container">
-      <div class="current-city">Выбор города</div>
-    </div>
-  </header>
+  <Header />
   <div class="wrapper">
     <div class="container">
       <h1 class="catalog-categories__header">Категории товаров</h1>
@@ -47,13 +44,13 @@ onMounted(() => {
   </div>
   <div class="wrapper">
     <div class="catalog-categories container">
-      <div v-for="categoria in categories"
+      <div v-for="(categoria, index) in categories"
         class="categoria"
         :style="{
           color: categoria.text_color,
           backgroundImage: `url(${categoria.image})`,
         }"
-        :key="categoria.id"
+        :key="index"
         >
         {{ categoria.name }}
       </div>
@@ -67,19 +64,6 @@ onMounted(() => {
 @import url('./assets/css/main.css');
 </style>
 <style scoped>
-.header {
-  width: 100%;
-  background-color: #FFFFFF;
-  box-shadow: 0px 2px 4px 0px #2727271A;
-  height: 72px;
-  margin-bottom: 35px;
-}
-.current-city {
-  font-family: 'FuturaPTBold', sans-serif;
-  font-weight: normal;
-	font-style: normal;
-}
-
 .catalog-categories__header {
   font-family: 'FuturaPTBold', sans-serif;
   font-size: 44px;
@@ -97,6 +81,7 @@ onMounted(() => {
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 22px;
+  font-size: 24px;
 }
 .categoria:hover {
   cursor: pointer;
