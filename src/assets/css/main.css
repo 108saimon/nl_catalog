@@ -1,12 +1,12 @@
 @font-face {
 	font-family: 'FuturaPTBold';
-	src: url('FuturaPTBold.otf') format('otf');
+	src: url('../fonts/FuturaPTBold.otf') format('opentype');
 	font-weight: normal;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'FuturaPTMedium';
-	src: url('FuturaPTMedium.otf') format('otf');
+	src: url('../fonts/FuturaPTMedium.otf') format('opentype');
 	font-weight: normal;
 	font-style: normal;
 }

@@ -42,8 +42,8 @@ onMounted(() => {
 </template>
 
 <style>
-@import url('./assets/reset.css');
-@import url('./assets/main.css');
+@import url('./assets/css/reset.css');
+@import url('./assets/css/main.css');
 </style>
 <style scoped>
 .header {
@@ -54,6 +54,8 @@ onMounted(() => {
 }
 .current-city {
   font-family: 'FuturaPTBold', sans-serif;
+  font-weight: normal;
+	font-style: normal;
 }
 
 </style>
