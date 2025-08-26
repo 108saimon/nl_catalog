@@ -6,6 +6,16 @@ const modalVisible = ref(false);
 const currentCity = ref('Новосибирск');
 
 const tempCurrentCity = ref('Новосибирск');
+
+function changeCityInput(event) {
+  if (event?.target?.value && event.target.value.length > 2) {
+    console.log(event.target.value);
+  }
+}
+
+function clearInput() {
+  tempCurrentCity.value = ('');
+}
 </script>
 
 <template>
@@ -26,8 +36,14 @@ const tempCurrentCity = ref('Новосибирск');
               Выбор населённого пункта:
             </div>
             <div class="city-select__input-wrapper">
-              <input type="text" name="city-input" v-model="tempCurrentCity" class="city-select__input" placeholder="Например, Санкт-петербург" />
-              <div class="city-select-clear__icon"></div>
+              <input type="text"
+                name="city-input"
+                class="city-select__input"
+                placeholder="Например, Санкт-петербург"
+                v-model="tempCurrentCity"
+                @input="changeCityInput"
+                />
+              <div class="city-select-clear__icon" @click="clearInput"></div>
               <div class="city-select__list-wrapper">
                 <div class="city-select__list"></div>
               </div>
@@ -73,7 +89,7 @@ div {
 }
 
 .modal {
-  position: absolute;
+  position: fixed;
   height: 100%;
   width: 100%;
   top: 0;
