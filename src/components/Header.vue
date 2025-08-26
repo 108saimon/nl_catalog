@@ -185,9 +185,27 @@ div {
   background: #fff;
   position: relative;
   top: 32px;
+  z-index: 130;
 }
-
-background: linear-gradient(270deg, #FFA800 0%, #FF6F00 60.2%);
+.city-select__submit-button:hover {
+  background: linear-gradient(270deg, #FFA800 0%, #FF6F00 60.2%);
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(270deg, rgba(255, 168, 0, 0.6) 0%, rgba(255, 111, 0, 0.6) 100%);
+}
+/* .city-select__submit-button:hover::before {
+  content: '';
+  position: absolute;
+  top: 22px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(270deg, rgba(255, 168, 0, 0.6) 0%, rgba(255, 111, 0, 0.6) 100%);
+  filter: blur(15px);
+  z-index: 125;
+  border-radius: 10px;
+} */
 
 
 /* 
