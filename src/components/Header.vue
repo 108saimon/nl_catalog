@@ -1,14 +1,18 @@
 <script setup>
+import axios from 'axios';
 import { ref, computed, onMounted } from 'vue';
 
-const modalVisible = ref(false);
-
 const currentCity = ref('Новосибирск');
+const currentCityId = ref(1);
 
-const tempCurrentCity = ref('Новосибирск');
+const cityLabel = ref('');
 
 const cityIsSelect = ref(false);
+const cityLabelTemp = ref('');
 
+const cityList = ref([]);
+
+// таймаут для ввода
 let inputTimeout = null;
 
 function changeCityInput(event) {
@@ -17,39 +21,76 @@ function changeCityInput(event) {
     if (event?.target?.value && event.target.value.length > 2) {
       console.log(event.target.value);
       console.log(currentCity.value);
+      getCityByString(event.target.value);
+      // cityList.value = getCityByString(event.target.value);
+    } else if (event?.target?.value && event.target.value.length < 3) {
+      cityList.value = [];
     }
   }, 300);
 }
 
 function clearInput() {
-  tempCurrentCity.value = ('');
+  cityLabelTemp.value = ('');
 }
 
-function debounce(func, wait) {
-  let timeout;
-  return function() {
-    const context = this;
-    const args = arguments;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      func.apply(context, args);
-    }, wait);
-  };
+function getCityByString(str) {
+  axios.get('/api/api/catalog3/v1/city/', {
+    params: {
+      'term': str,
+      'country': 'ru'
+    }, 
+  })
+  .then(response => {
+    if (response?.data?.data) {
+      cityList.value = response.data.data;
+      console.log(cityList.value);
+    }
+  })
+  .catch(error => {
+    console.error('Ошибка при запросе:', error);
+  });
 }
+
+function selectCity(city) {
+  cityLabel.value = city.label;
+  console.log('city', city);
+}
+
+// GET: https://nlstar.com/api/catalog3/v1/city/
+
+// Обязательные парметры:
+// term - ключевое слово для получения списка найденных населённых пунктов
+// country - всегда “ru”
+
+// Ключевые поля для использования:
+// city - название населённого пункта
+// label - строка с названием страны, области и населённого пункта
+// id - ID населённого пункта
+
+const modalVisible = ref(false);
+
+function showModal () {
+  modalVisible.value = true
+}
+
+function hideModal() {
+  modalVisible.value = false
+}
+
 </script>
 
 <template>
   <header class="header wrapper">
     <div class="container">
-      <div class="current-city" @click="modalVisible = true">
+      <div class="current-city" @click="showModal">
         <span class="current-city__icon"></span>
         {{ currentCity }}
       </div>
     </div>
     <div class="modal" v-show="modalVisible">
-      <div class="modal-background" @click="modalVisible = false"></div>
+      <div class="modal-background" @click="hideModal"></div>
       <div class="modal-window">
-        <div class="close-icon" @click="modalVisible = false"></div>
+        <div class="close-icon" @click="hideModal"></div>
         <div class="city-select__wrapper">
           <div class="city-select">
             <div class="city-select__header">
@@ -60,12 +101,20 @@ function debounce(func, wait) {
                 name="city-input"
                 class="city-select__input"
                 placeholder="Например, Санкт-петербург"
-                v-model="tempCurrentCity"
+                v-model="cityLabelTemp"
                 @input="changeCityInput"
                 />
               <div class="city-select-clear__icon" @click="clearInput"></div>
               <div class="city-select__list-wrapper">
-                <div class="city-select__list"></div>
+                <div class="city-select__list">
+                  <div class="city-select__item"
+                    v-for="city in cityList"
+                    :key="city.id"
+                    @click="selectCity(city)"
+                    >
+                    {{ city.label }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -183,6 +232,27 @@ div {
   border: 1px solid rgba(151, 151, 151, 0.5);
   border-radius: 5px;
 }
+
+.city-select__list-wrapper {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 100%;
+  height: 174px;
+  background: #fff;
+  overflow: auto;
+}
+/* <div class="city-select__list-wrapper">
+  <div class="city-select__list">
+    <div class="city-select__item"
+      v-for="city in cityList"
+      :key="city.id"
+      @click="selectCity(city)"
+      >
+      {{ city.label }}
+    </div>
+  </div>
+</div> */
 
 .city-select-clear__icon {
   margin: 0;
