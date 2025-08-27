@@ -2,13 +2,20 @@
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 
-const currentCity = ref('Новосибирск');
-const currentCityId = ref(1);
+const props = defineProps({
+  city: {
+    type: Object,
+    default: () => ({
+      id: 1,
+      name: 'Новосибирск',
+      label: ''
+    })
+  }
+});
 
-const cityLabel = ref('');
+const emit = defineEmits(['cityChange']);
 
-const cityIsSelect = ref(false);
-const cityLabelTemp = ref('');
+const cityLabelTemp = ref(props.city.label);
 const cityTemp = ref(null);
 
 const cityList = ref([]);
@@ -54,7 +61,6 @@ function getCityByString(str) {
       if (cityList.value.length > 0) {
         listIsVisible.value = true;
       }
-      console.log(cityList.value);
     }
   })
   .catch(error => {
@@ -64,10 +70,15 @@ function getCityByString(str) {
 
 function selectCity(city) {
   cityTemp.value = city;
-  console.log(city);
-  console.log(cityTemp.value.label);
   cityLabelTemp.value = cityTemp.value.label;
-  // listIsVisible.value = false;
+  listIsVisible.value = false;
+}
+
+function cityChange() {
+  if (cityTemp.value) {
+    emit('cityChange', cityTemp.value);
+    modalVisible.value = false;
+  }
 }
 
 const modalVisible = ref(false);
@@ -87,7 +98,7 @@ function hideModal() {
     <div class="container">
       <div class="current-city" @click="showModal">
         <span class="current-city__icon"></span>
-        {{ currentCity }}
+        {{ props.city.city }}
       </div>
     </div>
     <div class="modal" v-show="modalVisible">
@@ -124,11 +135,12 @@ function hideModal() {
               </div>
             </div>
           </div>
-          <button 
+          <button
             class="city-select__submit-button"
             :class="{
-              'city-select__submit-button-active': cityIsSelect
+              'city-select__submit-button-active': cityTemp !== null
             }"
+            @click="cityChange"
             >
             ПОДТВЕРДИТЬ
           </button>

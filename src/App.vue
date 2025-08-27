@@ -1,8 +1,13 @@
 <script setup>
 import axios from 'axios';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, reactive } from 'vue';
 import Header from './components/Header.vue';
 
+const city = ref({
+  id: 1,
+  city: 'Новосибирск',
+  label: ''
+});
 const cityId = ref(1);
 
 const categories = ref([]);
@@ -24,6 +29,11 @@ function initCatalog() {
     });
 }
 
+function cityChange(payload) {
+  city.value = payload;
+  console.log('city', payload);
+}
+
 onMounted(() => {
   // initCatalog();
 });
@@ -31,7 +41,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <Header />
+  <Header
+    :city="city"
+    @city-change="cityChange"
+    />
   <div class="wrapper">
     <div class="container">
       <h1 class="catalog-categories__header">Категории товаров</h1>
