@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const currentCity = ref('Новосибирск');
 const currentCityId = ref(1);
@@ -9,6 +9,7 @@ const cityLabel = ref('');
 
 const cityIsSelect = ref(false);
 const cityLabelTemp = ref('');
+const cityTemp = ref(null);
 
 const cityList = ref([]);
 const listIsVisible = ref(false);
@@ -20,18 +21,24 @@ function changeCityInput(event) {
   clearTimeout(inputTimeout);
   inputTimeout = setTimeout(() => {
     if (event?.target?.value && event.target.value.length > 2) {
-      console.log(event.target.value);
-      console.log(currentCity.value);
       getCityByString(event.target.value);
-      // cityList.value = getCityByString(event.target.value);
-    } else if (event?.target?.value && event.target.value.length < 3) {
+    } else {
       cityList.value = [];
+      listIsVisible.value = false;
     }
   }, 300);
 }
 
 function clearInput() {
   cityLabelTemp.value = ('');
+  listIsVisible.value = false;
+  cityList.value = [];
+}
+
+function cityInputFocus() {
+  if (cityList.value.length > 0) {
+    listIsVisible.value = true;
+  }
 }
 
 function getCityByString(str) {
@@ -56,20 +63,12 @@ function getCityByString(str) {
 }
 
 function selectCity(city) {
-  cityLabel.value = city.label;
-  console.log('city', city);
+  cityTemp.value = city;
+  console.log(city);
+  console.log(cityTemp.value.label);
+  cityLabelTemp.value = cityTemp.value.label;
+  // listIsVisible.value = false;
 }
-
-// GET: https://nlstar.com/api/catalog3/v1/city/
-
-// Обязательные парметры:
-// term - ключевое слово для получения списка найденных населённых пунктов
-// country - всегда “ru”
-
-// Ключевые поля для использования:
-// city - название населённого пункта
-// label - строка с названием страны, области и населённого пункта
-// id - ID населённого пункта
 
 const modalVisible = ref(false);
 
@@ -105,9 +104,11 @@ function hideModal() {
                 name="city-input"
                 autocomplete="off"
                 class="city-select__input"
+                :class="{'city-select__input-focus': listIsVisible }"
                 placeholder="Например, Санкт-петербург"
                 v-model="cityLabelTemp"
                 @input="changeCityInput"
+                @focus="cityInputFocus"
                 />
               <div class="city-select-clear__icon" @click="clearInput"></div>
               <div class="city-select__list-wrapper" v-show="listIsVisible">
@@ -247,19 +248,10 @@ div {
   border: 1px solid rgba(151, 151, 151, 0.5);
   border-radius: 5px;
 }
-.city-select__input:focus {
+.city-select__input:focus, .city-select__input-focus {
   border: 1px solid rgba(39, 39, 39, 1);
   color: #272727;
 }
-/* .city-select__input {
-  content: '';
-  position: absolute;
-  height: 1px;
-  width: calc(100% - 24px);
-  top: 0;
-  left: 12px;
-  background: rgba(151, 151, 151, 0.3);
-} */
 
 .city-select__list-wrapper {
   position: absolute;
@@ -267,7 +259,8 @@ div {
   left: 0;
   width: 100%;
   padding-top: 3px;
-  height: 174px;
+  padding-bottom: 4px;
+  max-height: 174px;
   background: #fff;
   overflow: auto;
   border: 1px solid rgba(39, 39, 39, 1);
@@ -289,7 +282,7 @@ div {
   color: #979797;
   line-height: 24px;
   margin-bottom: 7px;
-  padding: 0 12px;
+  padding: 0 16px;
 }
 .city-select__item:hover {
   color: #272727;
