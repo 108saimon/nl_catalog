@@ -8,14 +8,13 @@ const city = ref({
   city: 'Новосибирск',
   label: ''
 });
-const cityId = ref(1);
 
 const categories = ref([]);
 
-function initCatalog() {
+function getCatalogMenutags() {
   axios.get('/api/ru/api/catalog3/v1/menutags/', {
       params: {
-        'city_id': cityId.value,
+        'city_id': city.value.id,
       }, 
     })
     .then(response => {
@@ -32,10 +31,11 @@ function initCatalog() {
 function cityChange(payload) {
   city.value = payload;
   console.log('city', payload);
+  getCatalogMenutags();
 }
 
 onMounted(() => {
-  // initCatalog();
+  getCatalogMenutags();
 });
 
 </script>
