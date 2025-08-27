@@ -10,6 +10,16 @@
 	font-weight: normal;
 	font-style: normal;
 }
+@font-face {
+	font-family: 'FuturaPTLight';
+	src: url('../fonts/FuturaPTLight.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+  font-family: 'FuturaPTMedium', sans-serif;
+}
 
 body, html {
   min-height: 100vh;

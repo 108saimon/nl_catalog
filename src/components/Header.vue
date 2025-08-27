@@ -11,6 +11,7 @@ const cityIsSelect = ref(false);
 const cityLabelTemp = ref('');
 
 const cityList = ref([]);
+const listIsVisible = ref(false);
 
 // таймаут для ввода
 let inputTimeout = null;
@@ -43,6 +44,9 @@ function getCityByString(str) {
   .then(response => {
     if (response?.data?.data) {
       cityList.value = response.data.data;
+      if (cityList.value.length > 0) {
+        listIsVisible.value = true;
+      }
       console.log(cityList.value);
     }
   })
@@ -96,16 +100,17 @@ function hideModal() {
             <div class="city-select__header">
               Выбор населённого пункта:
             </div>
-            <div class="city-select__input-wrapper">
+            <div class="city-select__input-wrapper" :class="{ 'city-select__input-wrapper_show-list': listIsVisible }">
               <input type="text"
                 name="city-input"
+                autocomplete="off"
                 class="city-select__input"
                 placeholder="Например, Санкт-петербург"
                 v-model="cityLabelTemp"
                 @input="changeCityInput"
                 />
               <div class="city-select-clear__icon" @click="clearInput"></div>
-              <div class="city-select__list-wrapper">
+              <div class="city-select__list-wrapper" v-show="listIsVisible">
                 <div class="city-select__list">
                   <div class="city-select__item"
                     v-for="city in cityList"
@@ -208,6 +213,15 @@ div {
   display: flex;
   justify-content: space-between;
 }
+.city-select__input-wrapper_show-list::after {
+  content: '';
+  position: absolute;
+  height: 1px;
+  width: calc(100% - 24px);
+  top: 42px;
+  left: 12px;
+  background: rgba(151, 151, 151, 0.3);
+}
 
 .city-select__header {
   font-family: 'FuturaPTBold', sans-serif;
@@ -227,32 +241,60 @@ div {
   box-sizing: border-box;
   outline: 0;
   font-size: 18px;
+  font-family: 'FuturaPTLight';
   height: 48px;
   padding: 12px 48px 13px 16px;
   border: 1px solid rgba(151, 151, 151, 0.5);
   border-radius: 5px;
 }
+.city-select__input:focus {
+  border: 1px solid rgba(39, 39, 39, 1);
+  color: #272727;
+}
+/* .city-select__input {
+  content: '';
+  position: absolute;
+  height: 1px;
+  width: calc(100% - 24px);
+  top: 0;
+  left: 12px;
+  background: rgba(151, 151, 151, 0.3);
+} */
 
 .city-select__list-wrapper {
   position: absolute;
-  top: 48px;
+  top: 44px;
   left: 0;
   width: 100%;
+  padding-top: 3px;
   height: 174px;
   background: #fff;
   overflow: auto;
+  border: 1px solid rgba(39, 39, 39, 1);
+  border-top: 0px;
+  border-radius: 0 0 5px 5px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-/* <div class="city-select__list-wrapper">
-  <div class="city-select__list">
-    <div class="city-select__item"
-      v-for="city in cityList"
-      :key="city.id"
-      @click="selectCity(city)"
-      >
-      {{ city.label }}
-    </div>
-  </div>
-</div> */
+.city-select__list-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.city-select__list {
+  margin-top: 12px;
+}
+.city-select__item {
+  font-size: 18px;
+  font-family: 'FuturaPTLight';
+  color: #979797;
+  line-height: 24px;
+  margin-bottom: 7px;
+  padding: 0 12px;
+}
+.city-select__item:hover {
+  color: #272727;
+  cursor: pointer;
+}
 
 .city-select-clear__icon {
   margin: 0;
@@ -299,20 +341,4 @@ div {
   filter: blur(10px);
 }
 
-
-/* 
-<div class="city-select__wrapper">
-  <div class="city-select">
-    <div class="city-select__header"></div>
-    <div class="city-select__input-wrapper">
-      <div class="city-select__input"></div>
-      <div class="city-select__list-wrapper">
-        <div class="city-select__list"></div>
-      </div>
-    </div>
-  </div>
-  <div class="city-select__submit-button">
-    Подтвердить
-  </div>
-</div> */
 </style>
