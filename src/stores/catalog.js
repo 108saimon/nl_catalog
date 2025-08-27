@@ -8,6 +8,7 @@ export const useCatalogStore = defineStore('catalog', {
       label: ''
     },
     categories: [],
+    currentSlug: null,
   }),
   actions: {
   },
