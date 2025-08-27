@@ -13,7 +13,6 @@ watch(() => route.params.categorySlug, async (newId, oldId) => {
 }, { immediate: true });
 
 function getCatalogMenutags() {
-  alert(1);
   axios.get('/api/ru/api/catalog3/v1/menutags/', {
       params: {
         'city_id': store.city.id,
