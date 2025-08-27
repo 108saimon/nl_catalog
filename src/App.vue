@@ -1,26 +1,20 @@
 <script setup>
 import axios from 'axios';
-import { ref, computed, onMounted, reactive } from 'vue';
+import { onMounted } from 'vue';
 import Header from './components/Header.vue';
+import { useCatalogStore } from './stores/catalog';
 
-const city = ref({
-  id: 1,
-  city: 'Новосибирск',
-  label: ''
-});
-
-const categories = ref([]);
+const store = useCatalogStore();
 
 function getCatalogMenutags() {
   axios.get('/api/ru/api/catalog3/v1/menutags/', {
       params: {
-        'city_id': city.value.id,
+        'city_id': store.city.id,
       }, 
     })
     .then(response => {
       if (response.data?.tags) {
-        categories.value = response.data.tags;
-        console.log(categories.value);
+        store.categories = response.data.tags;
       }
     })
     .catch(error => {
@@ -29,8 +23,7 @@ function getCatalogMenutags() {
 }
 
 function cityChange(payload) {
-  city.value = payload;
-  console.log('city', payload);
+  store.city = payload;
   getCatalogMenutags();
 }
 
@@ -42,28 +35,10 @@ onMounted(() => {
 
 <template>
   <Header
-    :city="city"
+    :city="store.city"
     @city-change="cityChange"
     />
-  <div class="wrapper">
-    <div class="container">
-      <h1 class="catalog-categories__header">Категории товаров</h1>
-    </div>
-  </div>
-  <div class="wrapper">
-    <div class="catalog-categories container" v-if="categories.length > 0">
-      <div v-for="(categoria, index) in categories"
-        class="categoria"
-        :style="{
-          color: categoria.text_color,
-          backgroundImage: `url(${categoria.image})`,
-        }"
-        :key="index"
-        >
-        {{ categoria.name }}
-      </div>
-    </div>
-  </div>
+  <router-view />
 
 </template>
 
@@ -72,31 +47,5 @@ onMounted(() => {
 @import url('./assets/css/main.css');
 </style>
 <style scoped>
-.catalog-categories__header {
-  font-family: 'FuturaPTBold', sans-serif;
-  font-size: 44px;
-  margin-bottom: 20px;
-}
-
-.catalog-categories {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.categoria {
-  width: 288px;
-  height: 152px;
-  padding: 20px;
-  border-radius: 5px;
-  margin-bottom: 22px;
-  margin-right: 22px;
-  font-size: 24px;
-}
-.categoria:nth-child(4n) {
-  margin-right: 0;
-}
-.categoria:hover {
-  cursor: pointer;
-}
 </style>
 

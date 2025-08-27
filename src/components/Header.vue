@@ -174,7 +174,7 @@ div {
   width: 11px;
   height: 16px;
   display: inline-block;
-  background-image: url('geo-icon.svg');
+  background-image: url('/geo-icon.svg');
   position: relative;
   top: 2px;
   margin-right: 7px;
@@ -215,7 +215,7 @@ div {
   top: 0;
   left: auto;
   right: 0;
-  background-image: url('cross.svg');
+  background-image: url('/cross.svg');
   background-repeat: no-repeat;
   cursor: pointer;
 }
@@ -309,7 +309,7 @@ div {
   top: 0;
   left: auto;
   right: 0;
-  background-image: url('small-cross.svg');
+  background-image: url('/small-cross.svg');
   background-repeat: no-repeat;
   cursor: pointer;
   background-position: 50% 50%;
