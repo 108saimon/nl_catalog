@@ -12,7 +12,7 @@ const store = useCatalogStore();
   </div>
   <div class="wrapper">
     <div class="catalog-categories container" v-if="store.categories.length > 0">
-      <RouterLink :to="`/Category/${category.slug}/`" v-for="(category, index) in store.categories"
+      <RouterLink :to="`/category/${category.slug}/`" v-for="(category, index) in store.categories"
         class="category"
         :style="{
           color: category.text_color,

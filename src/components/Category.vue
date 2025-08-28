@@ -8,6 +8,7 @@ const route = useRoute();
 const store = useCatalogStore();
 
 const slug = computed(() => route.params.categorySlug);
+const categorySubSlug = computed(() => route.params?.categorySubSlug);
 
 const showSidebar = computed(() => store.showProductsSidebar || false);
 
@@ -55,12 +56,18 @@ onMounted(() => {
         >
         <div class="products-sidebar">
           <div class="products-sidebar__list" v-if="showSidebar">
-            <div class="products-sidebar__list-item"
+            <RouterLink class="products-sidebar__list-item"
+              :class="{ 'products-sidebar__list-item-active' : !categorySubSlug }"
+              :to="`/category/${slug}/`">
+              Все продукты
+            </RouterLink>
+            <RouterLink class="products-sidebar__list-item"
               v-for="(children, index) in store.currentSlug.children"
               :key="index"
-              :class="{ 'products-sidebar__list-item-active' : false }">
+              :class="{ 'products-sidebar__list-item-active' : categorySubSlug === children.slug }"
+              :to="`/category/${slug}/${children.slug}/`">
               {{ children.name }}
-            </div>
+            </RouterLink>
           </div>
         </div>
         <div class="products-list">
@@ -100,6 +107,21 @@ onMounted(() => {
 .products__wrapper__with-sidebar {
   grid-template-columns: 240px 1fr;
   gap: 34px;
+}
+
+.products-sidebar__list-item {
+  display: block;
+  color: #000;
+  font-family: 'FuturaPTLight';
+  font-size: 16px;
+  text-decoration: none;
+  height: 40px;
+  padding: 12px;
+  border-bottom: 1px solid #E9EEF3;
+}
+.products-sidebar__list-item-active {
+  background: #E9EEF3;
+  color: #202648;
 }
 
 /* <div class="products__wrapper">

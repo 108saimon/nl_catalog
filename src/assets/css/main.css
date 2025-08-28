@@ -19,6 +19,7 @@
 
 * {
   font-family: 'FuturaPTMedium', sans-serif;
+  box-sizing: border-box;
 }
 
 body, html {
