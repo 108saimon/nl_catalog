@@ -199,7 +199,7 @@ onMounted(() => {
   font-size: 16px;
   font-family: 'FuturaPTBold', sans-serif;
   background: #fff;
-  z-index: 130;
+  z-index: 20;
   position: relative;
 }
 .buy-button-active {
