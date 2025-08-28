@@ -8,17 +8,27 @@ const route = useRoute();
 const store = useCatalogStore();
 
 const slug = computed(() => route.params.categorySlug);
+
 const categorySubSlug = computed(() => route.params?.categorySubSlug);
 
 const showSidebar = computed(() => store.showProductsSidebar || false);
 
-watch(() => store.city.id, async (newId, oldId) => {
-  getProducts();
+watch(() => route.params?.categorySubSlug, async (newId, oldId) => {
+  filterProducts();
 });
 
 const products = ref([]);
 
-// const filteredProducts = products.filter(product )
+const filteredProducts = ref([]);
+
+function filterProducts() {
+  const subSlug = categorySubSlug.value;
+  if (subSlug) {
+    filteredProducts.value = products.value.filter(product => Array.isArray(product.tags) && product.tags.some(tag => tag.slug === subSlug));
+  } else {
+    filteredProducts.value = products.value;
+  }
+}
 
 function getProducts() {
   axios.get(`/api/ru/api/catalog3/v1/menutags/${slug.value}/`, {
@@ -29,6 +39,12 @@ function getProducts() {
     .then(response => {
       if (response.data?.products) {
         products.value = response.data.products
+        const subSlug = categorySubSlug.value;
+        if (subSlug) {
+          filteredProducts.value = products.value.filter(product => Array.isArray(product.tags) && product.tags.some(tag => tag.slug === subSlug));
+        } else {
+          filteredProducts.value = products.value;
+        }
       }
     })
     .catch(error => {
@@ -82,7 +98,7 @@ onMounted(() => {
           allowed и available - если хоть одно поле false, тогда товара нет в наличии
           tags - список категорий и подкатегорий, в которые входит продукт -->
           <div class="products-list-item"
-            v-for="(product, index) in products"
+            v-for="(product, index) in filteredProducts"
             :key="index">
             <!-- <div class="products-list-item__image"> -->
             <img :src="product.main_image_thumb_300" class="products-list-item__image" />
