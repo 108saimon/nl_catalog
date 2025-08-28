@@ -16,7 +16,7 @@ function getCatalogMenutags() {
   axios.get('/api/ru/api/catalog3/v1/menutags/', {
       params: {
         'city_id': store.city.id,
-      }, 
+      },
     })
     .then(response => {
       if (response.data?.tags) {

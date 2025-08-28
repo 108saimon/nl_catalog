@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCatalogStore } from '@/stores/catalog';
 import axios from 'axios';
@@ -8,6 +8,10 @@ const route = useRoute();
 const store = useCatalogStore();
 
 const slug = computed(() => route.params.categorySlug);
+
+watch(() => store.city.id, async (newId, oldId) => {
+  getProducts();
+});
 
 const products = ref([]);
 
@@ -21,12 +25,6 @@ function getProducts() {
       if (response.data?.products) {
         products.value = response.data.products
       }
-      // if (response.data?.tags) {
-      //   store.categories = response.data.tags;
-      //   if (route?.params?.categorySlug) {
-      //     store.currentSlug = store.categories.find(category => category.slug === route.params.categorySlug);
-      //   }
-      // }
     })
     .catch(error => {
       console.error('Ошибка при запросе:', error);
