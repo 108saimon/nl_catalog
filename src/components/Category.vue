@@ -9,7 +9,7 @@ const store = useCatalogStore();
 
 const slug = computed(() => route.params.categorySlug);
 
-const showSidebar = computed(() => store.showProductsSidebar);
+const showSidebar = computed(() => store.showProductsSidebar || false);
 
 watch(() => store.city.id, async (newId, oldId) => {
   getProducts();
@@ -54,7 +54,14 @@ onMounted(() => {
         :class="{ 'products__wrapper__with-sidebar': showSidebar }"
         >
         <div class="products-sidebar">
-          123
+          <div class="products-sidebar__list" v-if="showSidebar">
+            <div class="products-sidebar__list-item"
+              v-for="(children, index) in store.currentSlug.children"
+              :key="index"
+              :class="{ 'products-sidebar__list-item-active' : false }">
+              {{ children.name }}
+            </div>
+          </div>
         </div>
         <div class="products-list">
           567

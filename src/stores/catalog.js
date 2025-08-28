@@ -13,7 +13,7 @@ export const useCatalogStore = defineStore('catalog', {
     },
   }),
   getters: {
-    showProductsSidebar: (state) => state.currentSlug.children.length > 2,
+    showProductsSidebar: (state) => state?.currentSlug?.children.length > 2,
   },
   actions: {
   },
