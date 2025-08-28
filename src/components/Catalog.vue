@@ -39,8 +39,9 @@ const store = useCatalogStore();
 }
 
 .category {
-  width: 288px;
+  width: 271px;
   height: 152px;
+  background-size: 271px 152px;
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 22px;
@@ -48,7 +49,6 @@ const store = useCatalogStore();
   font-size: 24px;
   text-decoration: none;
   box-sizing: border-box;
-  background-size: cover;
 }
 .category:nth-child(4n) {
   margin-right: 0;
