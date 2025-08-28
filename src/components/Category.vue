@@ -70,26 +70,34 @@ onMounted(() => {
             </RouterLink>
           </div>
         </div>
-        <div class="products-list">
-          567
+        <div class="products-list" :class="{ 'products-list-wide': !showSidebar }">
+          <!-- Ключевые поля продукта для использования:
+          main_image_thumb_300 - изображение
+          category.name - название категории
+          present_name - название продукта
+          comment_name - текст под названием продукта
+          price - цена (всегда в рублях)
+          allowed и available - если хоть одно поле false, тогда товара нет в наличии
+          tags - список категорий и подкатегорий, в которые входит продукт -->
+          <div class="products-list-item"
+            v-for="(product, index) in products"
+            :key="index">
+            <!-- <div class="products-list-item__image"> -->
+            <img :src="product.main_image_thumb_300" class="products-list-item__image" />
+            <!-- </div> -->
+            <div class="products-list-item__wrapper">
+              <div class="products-list-item__category-name">{{product.category.name}}</div>
+              <div class="products-list-item__present_name">{{product.present_name}}</div>
+              <div class="products-list-item__comment_name">{{product.comment_name}}</div>
+              <div class="products-list-item__price">{{product.price}} ₽</div>
+            </div>
+            <!-- <div class="products-list-item__category-name">{{product.allowed, product.available}}</div> -->
+            <!-- <div>{{product.tags}}</div> -->
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- <RouterLink to="/">назад</RouterLink>
-  Каталог - {{ store?.currentSlug?.name }}
-  <div v-for="(product, index) in products" :key="index">
-    <pre>{{ product }}</pre>
-    </br>
-  </div> -->
-  <!-- Ключевые поля продукта для использования:
-  main_image_thumb_300 - изображение
-  category.name - название категории
-  present_name - название продукта
-  comment_name - текст под названием продукта
-  price - цена (всегда в рублях)
-  allowed и available - если хоть одно поле false, тогда товара нет в наличии
-  tags - список категорий и подкатегорий, в которые входит продукт -->
 </template>
 
 <style scoped>
@@ -124,14 +132,63 @@ onMounted(() => {
   color: #202648;
 }
 
-/* <div class="products__wrapper">
-  <div class="products-sidebar">
-    123
-  </div>
-  <div class="products-list">
-    567
-  </div>
-</div> */
+/* <div class="products-list-item"
+v-for="(product, index) in products"
+:key="index">
+<div class="products-list-item__image">
+  <img :src="product.main_image_thumb_300" />
+</div>
+<div class="products-list-item__category-name">{{product.category.name}}</div>
+<div class="products-list-item__present_name">{{product.present_name}}</div>
+<div class="products-list-item__comment_name">{{product.comment_name}}</div>
+<div class="products-list-item__price">{{product.price}}</div> */
+.products-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.products-list-wide {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.products-list-item {
+  width: 276px;
+  /* height: 494px; */
+  background: #fff;
+  box-shadow: 0px 2px 10px 0px #97979733;
+  margin-bottom: 24px;
+  margin-right: 24px;
+  text-align: center;
+}
+.products-list-item__image {
+  width: 100%;
+  display: block;
+  margin-bottom: 6px;
+}
+.products-list-item__wrapper {
+  padding: 0 12px 24px;
+}
+.products-list-item__category-name {
+  font-size: 14px;
+  color: #979797;
+  font-family: 'FuturaPTLight';
+  margin-bottom: 4px;
+}
+.products-list-item__present_name {
+  font-size: 20px;
+  font-family: 'FuturaPTBold', sans-serif;
+  margin-bottom: 9px;
+}
+.products-list-item__comment_name {
+  color: #272727;
+  font-size: 16px;
+  font-family: 'FuturaPTLight';
+  min-height: 20px;
+  margin-bottom: 14px;
+}
+.products-list-item__price {
+  font-size: 26px;
+  font-family: 'FuturaPTBold', sans-serif;
+}
 
 .to-home__link {
   width: 30px;
