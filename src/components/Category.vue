@@ -89,20 +89,10 @@ onMounted(() => {
           </div>
         </div>
         <div class="products-list" :class="{ 'products-list-wide': !showSidebar }">
-          <!-- Ключевые поля продукта для использования:
-          main_image_thumb_300 - изображение
-          category.name - название категории
-          present_name - название продукта
-          comment_name - текст под названием продукта
-          price - цена (всегда в рублях)
-          allowed и available - если хоть одно поле false, тогда товара нет в наличии
-          tags - список категорий и подкатегорий, в которые входит продукт -->
           <div class="products-list-item"
             v-for="(product, index) in filteredProducts"
             :key="index">
-            <!-- <div class="products-list-item__image"> -->
             <img :src="product.main_image_thumb_300" class="products-list-item__image" />
-            <!-- </div> -->
             <div class="products-list-item__wrapper">
               <div class="products-list-item__category-name">{{product.category.name}}</div>
               <div class="products-list-item__present_name">{{product.present_name}}</div>
@@ -113,8 +103,6 @@ onMounted(() => {
                 {{ product.allowed && product.available ? 'В корзину' : 'Нет в наличии' }}
               </button>
             </div>
-            <!-- <div class="products-list-item__category-name">{{product.allowed, product.available}}</div> -->
-            <!-- <div>{{product.tags}}</div> -->
           </div>
         </div>
       </div>
@@ -242,5 +230,21 @@ onMounted(() => {
   background-image: url('/arrow-left.svg');
   margin-right: 7px;
   display: inline-block;
+}
+
+@media (max-width: 1210px) {
+}
+
+@media (max-width: 1000px) {
+}
+
+@media (max-width: 640px) {
+  /* .catalog-categories {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .category:nth-child(4n), .category:nth-child(3n), .category:nth-child(2n) {
+    margin-right: 0;
+  } */
 }
 </style>

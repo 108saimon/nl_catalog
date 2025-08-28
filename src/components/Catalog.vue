@@ -56,4 +56,40 @@ const store = useCatalogStore();
 .category:hover {
   cursor: pointer;
 }
+
+@media (max-width: 1210px) {
+  .catalog-categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .category:nth-child(4n) {
+    margin-right: 22px;
+  }
+  .category:nth-child(3n) {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 1000px) {
+  .catalog-categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .category:nth-child(4n), .category:nth-child(3n) {
+    margin-right: 22px;
+  }
+  .category:nth-child(2n) {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .catalog-categories {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .category:nth-child(4n), .category:nth-child(3n), .category:nth-child(2n) {
+    margin-right: 0;
+  }
+}
 </style>

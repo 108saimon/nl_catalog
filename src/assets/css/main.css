@@ -34,6 +34,7 @@ div {
 }
 
 .wrapper {
+  min-width: 360px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,11 +46,25 @@ div {
   display: block;
 }
 
-/* @media (max-width: 1339px) {
+@media (max-width: 1210px) {
   .container {
-    min-width: 960px;
-    width: 100%;
-    background-color: #fff;
-    padding: 48px 52px 48px 52px;
+    width: 960px;
+    padding: 0 20px;
+    display: block;
   }
-} */
+}
+
+@media (max-width: 1000px) {
+  .container {
+    width: 600px;
+    padding: 0 20px;
+    display: block;
+  }
+}
+@media (max-width: 640px) {
+  .container {
+    width: 320px;
+    padding: 0 20px;
+    display: block;
+  }
+}
