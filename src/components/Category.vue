@@ -18,6 +18,8 @@ watch(() => store.city.id, async (newId, oldId) => {
 
 const products = ref([]);
 
+// const filteredProducts = products.filter(product )
+
 function getProducts() {
   axios.get(`/api/ru/api/catalog3/v1/menutags/${slug.value}/`, {
       params: {
@@ -90,6 +92,10 @@ onMounted(() => {
               <div class="products-list-item__present_name">{{product.present_name}}</div>
               <div class="products-list-item__comment_name">{{product.comment_name}}</div>
               <div class="products-list-item__price">{{product.price}} ₽</div>
+              <button class="buy-button"
+                :class="{ 'buy-button-active' : product.allowed && product.available }">
+                {{ product.allowed && product.available ? 'В корзину' : 'Нет в наличии' }}
+              </button>
             </div>
             <!-- <div class="products-list-item__category-name">{{product.allowed, product.available}}</div> -->
             <!-- <div>{{product.tags}}</div> -->
@@ -110,6 +116,7 @@ onMounted(() => {
 .products__wrapper {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 0;
 }
 
 .products__wrapper__with-sidebar {
@@ -132,16 +139,6 @@ onMounted(() => {
   color: #202648;
 }
 
-/* <div class="products-list-item"
-v-for="(product, index) in products"
-:key="index">
-<div class="products-list-item__image">
-  <img :src="product.main_image_thumb_300" />
-</div>
-<div class="products-list-item__category-name">{{product.category.name}}</div>
-<div class="products-list-item__present_name">{{product.present_name}}</div>
-<div class="products-list-item__comment_name">{{product.comment_name}}</div>
-<div class="products-list-item__price">{{product.price}}</div> */
 .products-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -152,12 +149,14 @@ v-for="(product, index) in products"
 
 .products-list-item {
   width: 276px;
-  /* height: 494px; */
   background: #fff;
   box-shadow: 0px 2px 10px 0px #97979733;
   margin-bottom: 24px;
   margin-right: 24px;
   text-align: center;
+}
+.products-list-item:nth-child(3n) {
+  margin-right: 0px;
 }
 .products-list-item__image {
   width: 100%;
@@ -182,12 +181,42 @@ v-for="(product, index) in products"
   color: #272727;
   font-size: 16px;
   font-family: 'FuturaPTLight';
-  min-height: 20px;
   margin-bottom: 14px;
 }
 .products-list-item__price {
   font-size: 26px;
   font-family: 'FuturaPTBold', sans-serif;
+  margin-bottom: 16px;
+}
+
+.buy-button {
+  box-sizing: border-box;
+  width: 212px;
+  height: 48px;
+  border-radius: 24px;
+  border: 2px solid rgba(151, 151, 151, 0.3);
+  color: rgba(172, 172, 172, 1);
+  font-size: 16px;
+  font-family: 'FuturaPTBold', sans-serif;
+  background: #fff;
+  z-index: 130;
+  position: relative;
+}
+.buy-button-active {
+  background: linear-gradient(270deg, #FFA800 0%, #FF6F00 60.2%);
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(270deg, rgba(255, 168, 0, 0.6) 0%, rgba(255, 111, 0, 0.6) 100%);
+}
+.buy-button-active::before {
+  content: "";
+  position: absolute;
+  inset: 0px;
+  transform: translate(2px, 6px);
+  z-index: -1;
+  background: linear-gradient(270deg, rgba(255, 168, 0, 0.6) 0%, rgba(255, 111, 0, 0.6) 100%);
+  filter: blur(10px);
 }
 
 .to-home__link {
