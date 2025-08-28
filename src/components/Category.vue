@@ -17,6 +17,10 @@ watch(() => route.params?.categorySubSlug, async (newId, oldId) => {
   filterProducts();
 });
 
+watch(() => store.city.id, async (newId, oldId) => {
+  getProducts();
+});
+
 const products = ref([]);
 
 const filteredProducts = ref([]);
@@ -60,14 +64,14 @@ onMounted(() => {
 
 <template>
   <div class="wrapper">
-    <div class="container">
+    <div class="container" v-if="store.currentSlug">
       <h1 class="catalog-category__header">
         <RouterLink to="/" class="to-home__link"></RouterLink>{{ store?.currentSlug?.name }}
       </h1>
     </div>
   </div>
   <div class="wrapper">
-    <div class="container">
+    <div class="container" v-if="store.currentSlug">
       <div 
         class="products__wrapper"
         :class="{ 'products__wrapper__with-sidebar': showSidebar }"
@@ -162,6 +166,12 @@ onMounted(() => {
 .products-list-item:nth-child(3n) {
   margin-right: 0px;
 }
+.products-list-wide .products-list-item:nth-child(4n) {
+  margin-right: 0px;
+}
+.products-list-wide .products-list-item:nth-child(3n) {
+  margin-right: 24px;
+}
 .products-list-item__image {
   width: 100%;
   display: block;
@@ -233,18 +243,66 @@ onMounted(() => {
 }
 
 @media (max-width: 1210px) {
+  .products-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .products-list-wide {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .products-list-item:nth-child(3n) {
+    margin-right: 24px;
+  }
+  .products-list-item:nth-child(2n) {
+    margin-right: opx;
+  }
+  .products-list-wide .products-list-item:nth-child(3n) {
+    margin-right: 0px;
+  }
+  .products-list-wide .products-list-item:nth-child(2n) {
+    margin-right: 24px;
+  }
 }
 
 @media (max-width: 1000px) {
+  .products__wrapper__with-sidebar {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .products-sidebar__list-item {
+    display: inline-block;
+    color: #000;
+    font-family: 'FuturaPTLight';
+    font-size: 16px;
+    text-decoration: none;
+    padding: 12px;
+    border-bottom: none;
+  }
+  .products-sidebar__list-item-active {
+    background: #E9EEF3;
+    color: #202648;
+  }
+
+  .products-list, .products-list-wide {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 640px) {
-  /* .catalog-categories {
+  .catalog-category__header {
+    font-size: 24px;
+  }
+  .products-list, .products-list-wide {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
   }
-  .category:nth-child(4n), .category:nth-child(3n), .category:nth-child(2n) {
-    margin-right: 0;
-  } */
+  .to-home__link {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    vertical-align: bottom;
+  }
 }
 </style>
