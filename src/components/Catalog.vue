@@ -12,15 +12,15 @@ const store = useCatalogStore();
   </div>
   <div class="wrapper">
     <div class="catalog-categories container" v-if="store.categories.length > 0">
-      <RouterLink :to="`/Category/${categoria.slug}/`" v-for="(categoria, index) in store.categories"
-        class="categoria"
+      <RouterLink :to="`/Category/${category.slug}/`" v-for="(category, index) in store.categories"
+        class="category"
         :style="{
-          color: categoria.text_color,
-          backgroundImage: `url(${categoria.image})`,
+          color: category.text_color,
+          backgroundImage: `url(${category.image})`,
         }"
         :key="index"
         >
-        {{ categoria.name }}
+        {{ category.name }}
       </RouterLink>
     </div>
   </div>
@@ -38,7 +38,7 @@ const store = useCatalogStore();
   grid-template-columns: repeat(4, 1fr);
 }
 
-.categoria {
+.category {
   width: 288px;
   height: 152px;
   padding: 20px;
@@ -50,10 +50,10 @@ const store = useCatalogStore();
   box-sizing: border-box;
   background-size: cover;
 }
-.categoria:nth-child(4n) {
+.category:nth-child(4n) {
   margin-right: 0;
 }
-.categoria:hover {
+.category:hover {
   cursor: pointer;
 }
 </style>

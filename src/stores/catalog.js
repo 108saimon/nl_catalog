@@ -8,8 +8,13 @@ export const useCatalogStore = defineStore('catalog', {
       label: ''
     },
     categories: [],
-    currentSlug: null,
+    currentSlug: {
+      children: [],
+    },
   }),
+  getters: {
+    showProductsSidebar: (state) => state.currentSlug.children.length > 2,
+  },
   actions: {
   },
 })
