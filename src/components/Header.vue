@@ -280,6 +280,7 @@ div {
   border-radius: 0 0 5px 5px;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  z-index: 200;
 }
 .city-select__list-wrapper::-webkit-scrollbar {
   display: none;
@@ -344,6 +345,21 @@ div {
   z-index: -1;
   background: linear-gradient(270deg, rgba(255, 168, 0, 0.6) 0%, rgba(255, 111, 0, 0.6) 100%);
   filter: blur(10px);
+}
+
+@media (max-width: 640px) {
+  .modal {
+    min-width: 360px;
+  }
+  .city-select__wrapper {
+    display: block;
+  }
+  .modal-window {
+    height: 220px;
+  }
+  .city-select {
+    width: 100%;
+  }
 }
 
 </style>
